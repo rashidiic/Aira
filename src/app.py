@@ -63,7 +63,7 @@ def _create_services(config: Config, application: Application) -> Services:
     stats = StatsService(database)
     tasks = TaskService(database)
     reminders = ReminderService(database, application.bot, config.timezone)
-    prompts = PromptBuilder.from_file(Path(__file__).parent.parent / "system_prompt.txt")
+    prompts = PromptBuilder.from_file(Path(__file__).parent.parent / "system_prompt.md")
     chats = ChatService(database, create_llm_service(config), memory, stats, prompts)
     return Services(
         database=database,
@@ -97,6 +97,7 @@ def _register_handlers(application: Application) -> None:
     application.add_handler(
         CallbackQueryHandler(panel.handle_panel_callback, pattern=r"^(panel|chat|set):")
     )
+    application.add_handler(CallbackQueryHandler(messages.handle_memory_callback, pattern=r"^mem:"))
     application.add_handler(InlineQueryHandler(inline.handle_inline_query))
     application.add_handler(MessageHandler(private & filters.VOICE, voice.handle_voice))
     application.add_handler(

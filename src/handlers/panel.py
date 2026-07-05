@@ -83,6 +83,7 @@ async def _screen(
         "panel:tasks": _tasks_screen,
         "panel:favorites": _favorites_screen,
         "panel:settings": _settings_screen,
+        "panel:help": _help_screen,
     }
     return await screens.get(data, _main_screen)(user_id, context)
 
@@ -107,7 +108,7 @@ async def _main_screen(
         [
             [_button("💬 Чаты", "panel:chats"), _button("🧠 Память", "panel:memory")],
             [_button("✅ Задачи", "panel:tasks"), _button("⭐ Избранное", "panel:favorites")],
-            [_button("⚙️ Настройки", "panel:settings")],
+            [_button("⚙️ Настройки", "panel:settings"), _button("📚 Команды", "panel:help")],
         ]
     )
     return text, keyboard
@@ -201,6 +202,32 @@ async def _settings_screen(
         ]
     )
     return text, keyboard
+
+
+async def _help_screen(
+    user_id: int,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> tuple[str, InlineKeyboardMarkup]:
+    await get_services(context).settings.get(user_id)
+    text = (
+        "📚 <b>БЫСТРЫЙ СТАРТ С AIRA</b>\n\n"
+        "💬 <b>Диалоги</b>\n"
+        "• Просто напишите сообщение — Aira ответит в активном чате.\n"
+        "• /newchat — начать новый диалог.\n"
+        "• /chats — посмотреть диалоги.\n\n"
+        "🧠 <b>Память</b>\n"
+        "• /save категория текст — сохранить вручную.\n"
+        "• Если Aira заметит важный факт, она предложит запомнить его кнопкой.\n"
+        "• /memories — посмотреть память.\n\n"
+        "✅ <b>Задачи и напоминания</b>\n"
+        "• /todo текст — добавить задачу.\n"
+        "• /remind ГГГГ-ММ-ДД ЧЧ:ММ текст — создать напоминание.\n\n"
+        "⚙️ <b>Настройки</b>\n"
+        "• /mode — режим работы.\n"
+        "• /style — стиль ответа.\n"
+        "• /language — язык ответа."
+    )
+    return text, _back_keyboard()
 
 
 def _back_keyboard() -> InlineKeyboardMarkup:

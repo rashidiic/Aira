@@ -1,6 +1,6 @@
 from io import BytesIO
 
-from telegram import InputFile, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InputFile, Update
 from telegram.constants import ParseMode
 from telegram.error import TelegramError
 from telegram.ext import ContextTypes
@@ -12,8 +12,29 @@ from src.handlers.utils import get_services, get_user_id, reply_text
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await get_services(context).settings.get(get_user_id(update))
     if update.effective_message:
+        keyboard = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("✨ Открыть панель", callback_data="panel:main"),
+                    InlineKeyboardButton("🧠 Память", callback_data="panel:memory"),
+                ],
+                [
+                    InlineKeyboardButton("⚙️ Настройки", callback_data="panel:settings"),
+                    InlineKeyboardButton("📚 Команды", callback_data="panel:help"),
+                ],
+            ]
+        )
         await update.effective_message.reply_text(
-            "Привет! Я Aira. Напиши сообщение или используй /panel и /help."
+            "✨ <b>Привет, я Aira</b>\n\n"
+            "Я твой персональный AI-ассистент в Telegram: помогу думать, писать код, "
+            "вести диалоги, помнить важное, задачи и напоминания.\n\n"
+            "Как начать:\n"
+            "1. Просто напиши мне вопрос обычным сообщением.\n"
+            "2. Используй /panel как центр управления.\n"
+            "3. Если скажешь важный факт о себе, я предложу аккуратно его запомнить.\n\n"
+            "Например: <i>«Я Python-разработчик и учу FastAPI»</i>",
+            reply_markup=keyboard,
+            parse_mode=ParseMode.HTML,
         )
 
 
