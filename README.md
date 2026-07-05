@@ -35,6 +35,33 @@ uv run python -m src.bot
 Для локального запуска без Docker замените хост `db` в `DATABASE_URL` на `localhost` и
 предварительно запустите PostgreSQL.
 
+## Deploy на Render
+
+Этот бот запускается через Telegram polling, поэтому на Render нужен Background Worker,
+а не Web Service.
+
+Build Command:
+
+```bash
+uv sync --frozen --no-dev
+```
+
+Start Command:
+
+```bash
+uv run --no-sync python -m src.bot
+```
+
+Environment Variables:
+
+- `TELEGRAM_BOT_TOKEN`
+- `GEMINI_API_KEY`
+- `DATABASE_URL`
+- `ADMIN_USER_ID`
+- `GEMINI_MODEL` — опционально
+- `LLM_PROVIDER` — опционально
+- `TIMEZONE` — опционально
+
 ## Основные команды
 
 - `/help` — полный список команд.
