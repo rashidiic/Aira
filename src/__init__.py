@@ -1,0 +1,1 @@
+"""Aira Telegram assistant."""
