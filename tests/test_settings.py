@@ -21,3 +21,11 @@ async def test_settings_accept_supported_value() -> None:
     result = await service.set(1, "language", "az")
 
     assert result == (1, "language", "az")
+
+
+async def test_settings_accept_swearing_mode() -> None:
+    service = SettingsService(FakeDatabase())  # type: ignore[arg-type]
+
+    result = await service.set(1, "mode", "swearing")
+
+    assert result == (1, "mode", "swearing")

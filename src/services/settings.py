@@ -4,7 +4,7 @@ from src.db.models import UserSettings
 
 class SettingsService:
     OPTIONS = {
-        "mode": {"normal", "code", "study"},
+        "mode": {"normal", "code", "study", "swearing"},
         "style": {"formal", "friendly", "brief", "detailed"},
         "language": {"ru", "en", "az"},
     }

@@ -28,6 +28,11 @@ class PromptBuilder:
             "normal": "Answer as a capable personal assistant.",
             "code": "Focus on correct, maintainable code and practical examples.",
             "study": "Teach step by step and check understanding.",
+            "swearing": (
+                "Answer as a capable personal assistant with casual, expressive profanity when "
+                "it fits the user's tone. Keep it natural and moderate. Do not use slurs, threats, "
+                "or degrading insults aimed at the user or real people."
+            ),
         }.get(mode, "Answer as a capable personal assistant.")
 
     @staticmethod

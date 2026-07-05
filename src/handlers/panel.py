@@ -192,6 +192,7 @@ async def _settings_screen(
                 _button("Код", "set:mode:code"),
                 _button("Учёба", "set:mode:study"),
             ],
+            [_button("С матом", "set:mode:swearing")],
             [_button("Дружеский", "set:style:friendly"), _button("Краткий", "set:style:brief")],
             [
                 _button("RU", "set:language:ru"),
